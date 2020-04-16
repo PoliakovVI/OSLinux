@@ -1,0 +1,61 @@
+
+
+daemon
+daemon.c
+input.txt
+log.txt
+
+
+daemon
+daemon.c
+input.txt
+log.txt
+
+
+  PID TTY          TIME CMD
+ 1274 ?        00:00:00 systemd
+ 1280 ?        00:00:00 (sd-pam)
+ 1293 ?        00:00:00 gnome-keyring-d
+ 1304 ?        00:00:00 dbus-daemon
+ 1415 ?        00:00:00 VBoxClient
+ 1416 ?        00:00:00 VBoxClient
+ 1426 ?        00:00:00 VBoxClient
+ 1427 ?        00:00:00 VBoxClient
+ 1435 ?        00:00:00 VBoxClient
+ 1436 ?        00:00:00 VBoxClient
+ 1443 ?        00:00:00 VBoxClient
+ 1444 ?        00:00:01 VBoxClient
+ 1452 ?        00:00:00 ssh-agent
+ 1454 ?        00:00:00 at-spi-bus-laun
+ 1459 ?        00:00:00 dbus-daemon
+ 1462 ?        00:00:00 at-spi2-registr
+ 1489 ?        00:00:00 gvfsd
+ 1494 ?        00:00:00 gvfsd-fuse
+ 1514 ?        00:00:00 ibus-portal
+ 1525 ?        00:00:00 xdg-permission-
+ 1531 ?        00:00:00 gnome-shell-cal
+ 1535 ?        00:00:00 evolution-sourc
+ 1541 ?        00:00:00 goa-daemon
+ 1551 ?        00:00:00 goa-identity-se
+ 1558 ?        00:00:00 pulseaudio
+ 1577 ?        00:00:00 gvfs-udisks2-vo
+ 1582 ?        00:00:00 gvfs-afc-volume
+ 1587 ?        00:00:00 gvfs-mtp-volume
+ 1591 ?        00:00:00 gvfs-goa-volume
+ 1595 ?        00:00:00 gvfs-gphoto2-vo
+ 1718 ?        00:00:00 tracker-store
+ 1782 ?        00:00:00 evolution-calen
+ 1790 ?        00:00:00 dconf-service
+ 1794 ?        00:00:00 evolution-addre
+ 1874 ?        00:00:00 gvfsd-trash
+ 1900 ?        00:00:02 nautilus
+ 1950 ?        00:00:00 gvfsd-metadata
+ 1967 ?        00:00:03 gedit
+ 2178 ?        00:00:05 gnome-terminal-
+ 2315 ?        00:00:33 daemon
+ 2317 ?        00:00:00 ps <defunct>
+ 2318 ?        00:00:00 ls <defunct>
+ 2347 ?        00:00:00 tracker-extract
+ 2370 ?        00:00:00 ps
+ 2371 ?        00:00:00 ls <defunct>
+ 2372 ?        00:00:00 ls <defunct>
