@@ -33,9 +33,10 @@
 
         int Daemon(char* str, char* argv[]) {
 		int fd, count;
+		int child_status;
 		char buf[50] = "";
 		char *ch;
-		pid_t parpid;
+		pid_t parpid, parpid2;
 		signal(SIGALRM, handler);
 		signal(SIGTERM, handler2);
 		
@@ -47,7 +48,11 @@
 		//write(1, buf, sizeof(buf));
 		//printf("!!!!\n");
 
+		char buffer[20] = "log1.txt";		
+
 		while(1){
+
+		pause();
 
 		if(flag == 1){	
 	
@@ -64,17 +69,33 @@
 		while(fgets(buf,49,fp)){
 			ch = strchr(buf, '\n');
 			*ch = '\0';
-			
 			if(parpid=fork()==0){
+	printf(" im here 1!\n");//!!!
 				sem_wait(&semaphore);
-				int fd2 = open("log.txt", O_CREAT|O_RDWR, S_IRWXU);
+	printf(" im here 2!\n");//!!!
+				int fd2 = open(buffer, O_CREAT|O_RDWR, S_IRWXU);
+	buffer[2] = 'a';//!!!
+	printf(" im here 2,25!\n");//!!!
 				lseek(fd2, 0, SEEK_END);
 				close(1);
 				dup2(fd2, 1); 
-				write(1, "\n\n", 2);
+	printf(" im here 2,5!\n");//!!!
+				if(parpid2=fork()==0){
+					execve(buf, argv + 1, NULL);
+				}
+	printf(" im here 3!\n");//!!!
+				wait(&child_status);
+				printf("child died\n");
+				if(WIFEXITED(child_status)){
+					printf("\n\nthe process exited normally, with exit code %d\n\n", WEXITSTATUS(child_status));
+				}
+				else{
+					printf("\n\nthe process exited abnormally\n\n");
+				}
+				close(fd2);
+				close(1);
 				sem_post(&semaphore);
-
-				execve(buf, argv + 1, NULL);
+				exit(0);
 			}
 		
 		}
