@@ -48,68 +48,58 @@
 		//write(1, buf, sizeof(buf));
 		//printf("!!!!\n");
 
-		char buffer[20] = "log1.txt";		
+		char buffer[20] = "log.txt";		
 
 		while(1){
 
-		pause();
+			pause();
 
-		if(flag == 1){	
-	
-		FILE *fp;
-		if ((fp = fopen(str, "r")) == NULL)
-  		{
-    			printf("Не удалось открыть файл");
-    			getchar();
-    			return 0;
-  		}
+			if(flag == 1){	
 		
-		sem_init(&semaphore, 0, 1);
-
-		while(fgets(buf,49,fp)){
-			ch = strchr(buf, '\n');
-			*ch = '\0';
-			if(parpid=fork()==0){
-	printf(" im here 1!\n");//!!!
-				sem_wait(&semaphore);
-	printf(" im here 2!\n");//!!!
+				FILE *fp;
+				if ((fp = fopen(str, "r")) == NULL){
+		  		
+		    			printf("Не удалось открыть файл");
+		    			getchar();
+		    			return 0;
+		  		}
+				
+				sem_init(&semaphore, 0, 1);
 				int fd2 = open(buffer, O_CREAT|O_RDWR, S_IRWXU);
-	buffer[2] = 'a';//!!!
-	printf(" im here 2,25!\n");//!!!
 				lseek(fd2, 0, SEEK_END);
 				close(1);
 				dup2(fd2, 1); 
-	printf(" im here 2,5!\n");//!!!
-				if(parpid2=fork()==0){
-					execve(buf, argv + 1, NULL);
+
+				while(fgets(buf,49,fp)){
+					ch = strchr(buf, '\n');
+					*ch = '\0';
+					sem_wait(&semaphore);
+					
+					if(parpid2=fork()==0){
+						execve(buf, argv + 1, NULL);
+					}
+					wait(&child_status);
+					if(WIFEXITED(child_status)){
+						printf("\n\nthe process exited normally, with exit code %d\n\n", WEXITSTATUS(child_status));
+					}
+					else{
+						printf("\n\nthe process exited abnormally\n\n");
+					}
+					
+					sem_post(&semaphore);
+				
+			
 				}
-	printf(" im here 3!\n");//!!!
-				wait(&child_status);
-				printf("child died\n");
-				if(WIFEXITED(child_status)){
-					printf("\n\nthe process exited normally, with exit code %d\n\n", WEXITSTATUS(child_status));
-				}
-				else{
-					printf("\n\nthe process exited abnormally\n\n");
-				}
-				close(fd2);
-				close(1);
-				sem_post(&semaphore);
-				exit(0);
+			close(fd2);
+			fclose(fp);
+			flag = 0;
 			}
-		
-		}
-		fclose(fp);
-		/*close(1);
-		dup2(fd, 1);
-		close(fd);
-		execve(buf, argv + 1, NULL);*/
-		flag = 0;
-		}
 
 		if(flagDeath == 1){
 			
  			sem_destroy(&semaphore);
+
+			close(1);
 			exit(0);
 		}
 
