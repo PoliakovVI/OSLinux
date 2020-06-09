@@ -32,7 +32,7 @@
 
 
         int Daemon(char* str, char* argv[]) {
-		int fd, count;
+		int fd, count, child_counter;
 		int child_status;
 		char buf[50] = "";
 		char *ch;
@@ -69,10 +69,15 @@
 				lseek(fd2, 0, SEEK_END);
 				close(1);
 				dup2(fd2, 1); 
+				child_counter = 0;
 
 				while(fgets(buf,49,fp)){
 					ch = strchr(buf, '\n');
 					*ch = '\0';
+					child_counter++;
+
+				if(parpid=fork()==0){
+
 					sem_wait(&semaphore);
 					
 					if(parpid2=fork()==0){
@@ -88,8 +93,16 @@
 					
 					sem_post(&semaphore);
 				
+				exit(0);
+				}
+				
 			
 				}
+			while(child_counter > 0){
+				wait(&child_status);
+				child_counter--;
+			}
+				
 			close(fd2);
 			fclose(fp);
 			flag = 0;
